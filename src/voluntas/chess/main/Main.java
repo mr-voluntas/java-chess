@@ -7,19 +7,42 @@ public class Main {
   public static void main(String[] args) {
 
     Board board = new Board();
-    // Player playerWhite = new Player(true);
-    // Player playerBlack = new Player(false);
+    Player playerWhite = new Player(true);
+    Player playerBlack = new Player(false);
+    @SuppressWarnings("resource")
+    Scanner userInput = new Scanner(System.in);
 
     board.newGame();
     board.printBoard();
 
-    Scanner userInput = new Scanner(System.in);
+    while (true) {
 
-    System.out.println("Make a move...");
-    String move = userInput.nextLine();
-    String[] moves = move.split(" ");
-    board.movePiece(moves[0], moves[1]);
+      if (playerWhite.isActivePlayer()) {
+        System.out.println("\nWhite players turn...");
+        System.out.print("Enter your move: ");
+        String move = userInput.nextLine();
+        String[] movePosition = move.split(" ");
+        String from = movePosition[0];
+        String to = movePosition[1];
+        if (board.movePiece("white", from, to)) {
+          playerWhite.setActivePlayer(false);
+          playerBlack.setActivePlayer(true);
+        }
+      }
 
-    userInput.close();
+      if (playerBlack.isActivePlayer()) {
+        System.out.println("\nBlack players turn...");
+        System.out.print("Enter your move: ");
+        String move = userInput.nextLine();
+        String[] movePosition = move.split(" ");
+        String from = movePosition[0];
+        String to = movePosition[1];
+        if (board.movePiece("black", from, to)) {
+          playerWhite.setActivePlayer(true);
+          playerBlack.setActivePlayer(false);
+        }
+      }
+    }
+
   }
 }

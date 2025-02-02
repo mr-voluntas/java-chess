@@ -1,6 +1,6 @@
 package voluntas.chess.main;
 
-public class Piece {
+public abstract class Piece {
 
   private String name;
   private String colour;
@@ -42,6 +42,14 @@ public class Piece {
 
   public void setTaken(boolean isTaken) {
     this.isTaken = isTaken;
+  }
+
+  public void printIcon() {
+    if (getColour().equals("white")) {
+      System.out.printf("\u001B[1m\u001B[37m -%s- \u001B[0m", getIcon());
+    } else {
+      System.out.printf("\u001B[1m\u001B[38;5;16m -%s- \u001B[0m", getIcon());
+    }
   }
 
 }
